@@ -1,0 +1,1 @@
+<div class="col-md-12 bg-info text-center"><h1>Footer Section</h1></div>
