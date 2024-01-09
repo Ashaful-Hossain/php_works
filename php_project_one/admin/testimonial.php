@@ -2,19 +2,20 @@
 <?php
 session_start();
 $db = new mysqli('localhost','root','','courier_service');
-$data = $db->query("select * from services order by id desc");
+$data = $db->query("select * from testimonial order by id desc");
 
 if(!isset($_SESSION['username'])){
     header('Location:index.php');
 }
-if(isset($_POST['title'])){
-    $title  = $_POST['title'];
-    $description = $_POST['description'];
-    $logo = $_FILES['logo']['name'];
-    move_uploaded_file($_FILES['logo']['tmp_name'],'../uploads/'.$logo);
- $query ="INSERT INTO `services` (`id`, `logo`, `title`, `description`) VALUES (NULL,'$logo','$title','$description')";
+if(isset($_POST['name'])){
+    $name  = $_POST['name'];
+    $designation = $_POST['designation'];
+    $comment = $_POST['comment'];
+    $photo = $_FILES['photo']['name'];
+    move_uploaded_file($_FILES['photo']['tmp_name'],'../uploads/'.$photo);
+ $query ="INSERT INTO `testimonial` (`id`, `name`, `photo`, `designation`,`comment`) VALUES (NULL,'$name','$photo','$designation','$comment')";
  $data = $db->query($query);
- header('Location: service.php');
+ header('Location: testimonial.php');
 }
 ?>
   <?php
@@ -26,7 +27,7 @@ if(isset($_POST['title'])){
     <div class="container">
     <div class="card card-primary">
 <div class="card-header">
-<h3 class="card-title">Add new Service</h3>
+<h3 class="card-title">Add new Testimonial</h3>
 </div>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -34,25 +35,29 @@ if(isset($_POST['title'])){
 <div class="row">
 <div class="col-6">
 <div class="form-group">
-<label for="t-1">Title</label>
-<input type="text" name="title" class="form-control" id="t-1" placeholder="Title one">
+<label for="t-1">Name</label>
+<input type="text" name="name" class="form-control" id="t-1" placeholder="Name">
 </div>
 <div class="form-group">
-    <label for="des">Description</label>
-    <textarea class="summernote" name="description" class="form-control" id="des">Description</textarea>
+    <label for="des">Comment</label>
+    <textarea class="summernote" name="comment" class="form-control" id="des"> </textarea>
 </div>
 </div>
 <div class="col-6">
 <div class="form-group">
-<label for="exampleInputFile">Logo input</label>
+<label for="exampleInputFile">Photo</label>
 <div class="input-group">
 <div class="custom-file">
-<input type="file" class="custom-file-input" name="logo" id="exampleInputFile">
+<input type="file" class="custom-file-input" name="photo" id="exampleInputFile">
 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
 </div>
 <div class="input-group-append">
 <span class="input-group-text">Upload</span>
 </div>
+</div>
+<div class="form-group">
+<label for="t-1">Designation</label>
+<input type="text" name="designation" class="form-control" id="t-1" placeholder="Title">
 </div>
 </div>
 
@@ -83,26 +88,28 @@ if(isset($_POST['title'])){
        <table class="table table-borderd">
         <tr>
           <th>SL</th>
-          <th>Title</th>
-          <th>Description</th>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Comment</th>
           <th>Logo</th>
           <th>Action</th>
         </tr>
         <?php 
         $i=0;
-        while($ser = $data->fetch_assoc()) {
+        while($tst = $data->fetch_assoc()) {
           ?>
         <tr>
 
           <td><?php echo ++$i ?></td>
-          <td><?php echo $ser['title'] ?></td>
-          <td><?php echo $ser['description'] ?></td>
-          <td><img src="../uploads/<?php echo $ser['logo'] ?>" alt=""
+          <td><?php echo $tst['name'] ?></td>
+          <td><?php echo $tst['designation'] ?></td>
+          <td><?php echo $tst['comment'] ?></td>
+          <td><img src="../uploads/<?php echo $tst['photo'] ?>" alt=""
           width="80" height="50"></td>
 
           <td>
-            <a href="edit_service.php?id=<?php echo $ser['id'] ?>" class="btn btn-success">Edit</a>
-            <a href="delete_service.php?id=<?php echo $ser['id'] ?>" class="btn btn-danger">Delete</a>
+            <a href="edit_tst.php?id=<?php echo $tst['id'] ?>" class="btn btn-success">Edit</a>
+            <a href="delete_tst.php?id=<?php echo $tst['id'] ?>" class="btn btn-danger">Delete</a>
           </td>
         </tr>
         <?php }?>

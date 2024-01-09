@@ -15,8 +15,7 @@ if(isset($_POST['title_1'])){
     move_uploaded_file($_FILES['photo']['tmp_name'],'../uploads/'.$photo);
  $query ="INSERT INTO `sliders` (`id`, `title_1`, `title_2`, `title_3`, `brief`, `photo`) VALUES (NULL,'$title_1','$title_2','$title_3','$brief','$photo')";
  $data = $db->query($query);
- header('Location: slider.php
- ');
+ header('Location: slider.php');
 }
 ?>
   <?php
