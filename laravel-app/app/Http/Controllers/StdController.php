@@ -30,7 +30,7 @@ class StdController extends Controller
     public function store(Request $r)
     {
         Student::create($r->all());
-        return redirect()->route('std.index');
+        return redirect()->route('std.index')->with('msg',"Successfully Inserted");
     }
 
     /**
